@@ -23,7 +23,9 @@ def solve():
         T[0], T[-1] = T_left, T_right
 
         A = lam / (dx ** 2)
+        C = lam / (dx ** 2)
         B = 2 * A + (rho * c) / dt
+        
 
         for _ in range(nt):
             alpha = np.zeros(nx)
@@ -34,9 +36,9 @@ def solve():
             beta[1] = T_left
             for i in range(1, nx - 1):
                 F = -(rho * c / dt) * T[i]
-                denom = B - A * alpha[i]
+                denom = B - C * alpha[i]
                 alpha[i + 1] = A / denom
-                beta[i + 1] = (A * beta[i] - F) / denom
+                beta[i + 1] = (C * beta[i] - F) / denom
 
             # Обратная прогонка
             T_new = np.zeros(nx)
